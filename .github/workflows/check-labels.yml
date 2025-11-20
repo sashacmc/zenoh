@@ -5,19 +5,18 @@ on:
     types: [opened, synchronize, reopened, labeled]
     branches: ["**"]
 
+permissions:
+  pull-requests: write
+
 jobs:
   check-labels:
     name: Check PR labels
     uses: sashacmc/ci/.github/workflows/check-labels.yml@main
     secrets:
       github-token: ${{ secrets.GITHUB_TOKEN }}
-    permissions:
-      pull-requests: write
 
   checklist-verification:
-    name: Check PR checklists 
+    name: Check PR checklists
     uses: sashacmc/ci/.github/workflows/checklist-verification.yml@main
     secrets:
       github-token: ${{ secrets.GITHUB_TOKEN }}
-    permissions:
-      pull-requests: write
