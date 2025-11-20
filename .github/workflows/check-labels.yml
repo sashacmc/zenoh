@@ -8,7 +8,15 @@ on:
 jobs:
   check-labels:
     name: Check PR labels
-    uses: eclipse-zenoh/ci/.github/workflows/check-labels.yml@main
+    uses: sashacmc/ci/.github/workflows/check-labels.yml@main
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      pull-requests: write
+
+  checklist-verification:
+    name: Check PR checklists 
+    uses: sashacmc/ci/.github/workflows/checklist-verification.yml@main
     secrets:
       github-token: ${{ secrets.GITHUB_TOKEN }}
     permissions:
