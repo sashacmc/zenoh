@@ -18,6 +18,5 @@ jobs:
     name: Check PR checklists
     permissions:
       pull-requests: write
-      checks: write
     uses: sashacmc/ci/.github/workflows/checklist-verification.yml@main
     secrets: inherit
