@@ -14,12 +14,10 @@ jobs:
     name: Check PR labels
     permissions: inherit
     uses: sashacmc/ci/.github/workflows/check-labels.yml@main
-    secrets:
-      github-token: ${{ secrets.GITHUB_TOKEN }}
+    secrets: inherit
 
   checklist-verification:
     name: Check PR checklists
     permissions: inherit
     uses: sashacmc/ci/.github/workflows/checklist-verification.yml@main
-    secrets:
-      github-token: ${{ secrets.GITHUB_TOKEN }}
+    secrets: inherit
