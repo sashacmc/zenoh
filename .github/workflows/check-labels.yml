@@ -5,19 +5,19 @@ on:
     types: [opened, synchronize, reopened, labeled, unlabeled]
     branches: ["**"]
 
-permissions:
-  pull-requests: write
-  checks: write
-
 jobs:
   check-labels:
     name: Check PR labels
-    permissions: inherit
+    permissions:
+      pull-requests: write
+      checks: write
     uses: sashacmc/ci/.github/workflows/check-labels.yml@main
     secrets: inherit
 
   checklist-verification:
     name: Check PR checklists
-    permissions: inherit
+    permissions:
+      pull-requests: write
+      checks: write
     uses: sashacmc/ci/.github/workflows/checklist-verification.yml@main
     secrets: inherit
