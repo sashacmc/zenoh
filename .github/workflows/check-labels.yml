@@ -2,27 +2,14 @@ name: Check required labels
 
 on:
   pull_request_target:
-    types: [opened, reopened, labeled, unlabeled]
+    types: [opened, synchronize, reopened, labeled, unlabeled]
     branches: ["**"]
-  issue_comment:
-    types: [created, edited]
 
 jobs:
   check-labels:
     name: Check PR labels
-    # Only run on PR events (not on comment edits)
-    if: github.event_name == 'pull_request_target'
     permissions:
       pull-requests: write
-      checks: write
     uses: sashacmc/ci/.github/workflows/check-labels.yml@main
-    secrets: inherit
-
-  checklist-verification:
-    name: Check PR checklists
-    # Run on PR events and when comments are edited
-    if: github.event_name == 'pull_request_target' || (github.event_name == 'issue_comment' && github.event.issue.pull_request)
-    permissions:
-      pull-requests: write
-    uses: sashacmc/ci/.github/workflows/checklist-verification.yml@main
-    secrets: inherit
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
