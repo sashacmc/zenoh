@@ -24,5 +24,6 @@ jobs:
     if: github.event_name == 'pull_request_target' || (github.event_name == 'issue_comment' && github.event.issue.pull_request)
     permissions:
       pull-requests: write
+      statuses: write
     uses: sashacmc/ci/.github/workflows/checklist-verification.yml@main
     secrets: inherit
