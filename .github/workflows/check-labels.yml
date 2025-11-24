@@ -14,22 +14,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check-labels:
-    name: Check labels
-    # Only run on PR events, not comment edits
-    if: github.event_name == 'pull_request_target'
+  checklist:
+    name: PR Checklist
     permissions:
       pull-requests: write
+      statuses: write
     uses: sashacmc/ci/.github/workflows/check-labels.yml@main
-    secrets: inherit
-
-  verify-checklist:
-    name: Verify checklist
-    # Wait for check-labels to finish first (or skip if it didn't run)
-    needs: [check-labels]
-    # Always run (even if check-labels was skipped due to comment edits)
-    if: always()
-    permissions:
-      pull-requests: write
-    uses: sashacmc/ci/.github/workflows/checklist-verification.yml@main
     secrets: inherit
