@@ -10,8 +10,8 @@ on:
 jobs:
   check-labels:
     name: Check PR labels
-    # Only run on PR events (not on comment edits)
-    if: github.event_name == 'pull_request_target'
+    # Only run when PR is opened/reopened or labels change (not on commits or comment edits)
+    if: github.event_name == 'pull_request_target' && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'labeled' || github.event.action == 'unlabeled')
     permissions:
       pull-requests: write
       checks: write
