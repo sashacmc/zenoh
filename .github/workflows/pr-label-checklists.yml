@@ -20,4 +20,5 @@ jobs:
       pull-requests: write
       statuses: write
     uses: sashacmc/ci/.github/workflows/pr-label-checklists.yml@main
-    secrets: inherit
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
