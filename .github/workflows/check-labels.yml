@@ -20,8 +20,10 @@ jobs:
 
   checklist-verification:
     name: Check PR checklists
-    # Run on PR events and when comments are edited
-    if: github.event_name == 'pull_request_target' || (github.event_name == 'issue_comment' && github.event.issue.pull_request)
+    # Wait for check-labels to finish (or be skipped) before verifying
+    needs: [check-labels]
+    # Run on PR events and when comments are edited (always() allows running even if check-labels was skipped)
+    if: always() && (github.event_name == 'pull_request_target' || (github.event_name == 'issue_comment' && github.event.issue.pull_request))
     permissions:
       pull-requests: write
       statuses: write
