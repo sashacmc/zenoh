@@ -1,23 +1,15 @@
-name: PR Checklist
+name: Check required labels
 
 on:
-  # Trigger on PR creation and label changes (NOT on commits)
   pull_request_target:
-    types: [opened, reopened, labeled, unlabeled]
-  # Trigger when checklist comment is edited (user checks boxes)
-  issue_comment:
-    types: [edited]
-
-# Prevent duplicate runs when swapping labels (unlabeled + labeled events fire together)
-concurrency:
-  group: check-labels-${{ github.event.pull_request.number || github.event.issue.number }}
-  cancel-in-progress: true
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+    branches: ["**"]
 
 jobs:
-  checklist:
-    name: PR Checklist
+  check-labels:
+    name: Check PR labels
     permissions:
       pull-requests: write
-      statuses: write
     uses: sashacmc/ci/.github/workflows/check-labels.yml@main
-    secrets: inherit
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
