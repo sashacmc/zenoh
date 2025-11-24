@@ -19,6 +19,7 @@ jobs:
     permissions:
       pull-requests: write
       statuses: write
+      contents: read
     uses: sashacmc/ci/.github/workflows/pr-label-checklists.yml@main
     secrets:
       github-token: ${{ secrets.GITHUB_TOKEN }}
