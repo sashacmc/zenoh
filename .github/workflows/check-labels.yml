@@ -2,7 +2,7 @@ name: Check required labels
 
 on:
   pull_request_target:
-    types: [opened, reopened, labeled, unlabeled]
+    types: [opened, synchronize, reopened, labeled, unlabeled]
     branches: ["**"]
   issue_comment:
     types: [created, edited]
