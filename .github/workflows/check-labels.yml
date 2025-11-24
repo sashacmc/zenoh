@@ -1,11 +1,13 @@
 name: Check required labels
 
 on:
+  # Trigger on PR creation and label changes (NOT on commits)
   pull_request_target:
-    types: [opened, synchronize, reopened, labeled, unlabeled]
+    types: [opened, reopened, labeled, unlabeled]
     branches: ["**"]
+  # Trigger when checklist comment is edited (user checks boxes)
   issue_comment:
-    types: [created, edited]
+    types: [edited]
 
 # Prevent duplicate runs when swapping labels (unlabeled + labeled events fire together)
 concurrency:
@@ -15,20 +17,19 @@ concurrency:
 jobs:
   check-labels:
     name: Check PR labels
-    # Only run when PR is opened/reopened or labels change (not on commits or comment edits)
-    if: github.event_name == 'pull_request_target' && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'labeled' || github.event.action == 'unlabeled')
+    # Only run on PR events, not comment edits
+    if: github.event_name == 'pull_request_target'
     permissions:
       pull-requests: write
-      checks: write
     uses: sashacmc/ci/.github/workflows/check-labels.yml@main
     secrets: inherit
 
   checklist-verification:
-    name: Check PR checklists
-    # Wait for check-labels to finish (or be skipped) before verifying
+    name: PR Checklist Completion
+    # Wait for check-labels to finish first (or skip if it didn't run)
     needs: [check-labels]
-    # Run on PR events and when comments are edited (always() allows running even if check-labels was skipped)
-    if: always() && (github.event_name == 'pull_request_target' || (github.event_name == 'issue_comment' && github.event.issue.pull_request))
+    # Always run (even if check-labels was skipped due to comment edit)
+    if: always()
     permissions:
       pull-requests: write
       statuses: write
