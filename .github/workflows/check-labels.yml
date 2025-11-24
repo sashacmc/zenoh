@@ -7,6 +7,11 @@ on:
   issue_comment:
     types: [created, edited]
 
+# Prevent duplicate runs when swapping labels (unlabeled + labeled events fire together)
+concurrency:
+  group: check-labels-${{ github.event.pull_request.number || github.event.issue.number }}
+  cancel-in-progress: true
+
 jobs:
   check-labels:
     name: Check PR labels
