@@ -1,12 +1,8 @@
 name: PR Label Checklists
 
 on:
-  # Trigger on PR creation and label changes (NOT on commits)
   pull_request_target:
-    types: [opened, reopened, labeled, unlabeled]
-  # Trigger when checklist comment is edited (user checks boxes)
-  issue_comment:
-    types: [edited]
+    types: [opened, reopened, labeled, unlabeled, edited, synchronize]
 
 # Prevent duplicate runs when swapping labels (unlabeled + labeled events fire together)
 concurrency:
